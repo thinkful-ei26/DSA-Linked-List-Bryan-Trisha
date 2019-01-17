@@ -8,7 +8,7 @@ class _Node {
 }
 
 class LinkedList {
-  constructor(head){
+  constructor(){
     this.head = null;
   }
 
@@ -25,7 +25,7 @@ class LinkedList {
       this.insertFirst(item); 
     } else {
       let tempNode = this.head;
-      while (this.next !== null) {
+      while (tempNode.next !== null) {
         // go to the next value this.next
         tempNode = tempNode.next; 
       }
@@ -40,11 +40,43 @@ class LinkedList {
     this.head = new _Node(item, this.head);
   }
 
-  find(){
-
+  find(item) { 
+    //start at the head
+    let currNode = this.head;
+    //if the list is empty
+    if (!this.head){
+      return null;
+    }
+    //Check for the item 
+    while(currNode.value !== item) {
+      //return null if end of the list 
+      // and the item is not on the list
+      if (currNode.next === null) {
+        return null;
+      }
+      else {
+        //otherwise keep looking 
+        currNode = currNode.next;
+      }
+    }
+    //found it
+    return currNode;
   }
 
-  remove(){
+  // remove(){
 
-  }
+  // }
 }
+
+function main(){
+  let SLL = new LinkedList();
+  SLL.insertFirst('Apollo');
+  SLL.insertFirst('Boomer');
+  SLL.insertFirst('Helo');
+  console.log(SLL.insertFirst('Husker'));
+  // SLL.insertFirst('Starbuck');
+  console.log(JSON.stringify(SLL, null, 2));
+  console.log(SLL.find('Apollo'));
+}
+
+console.log(main());
