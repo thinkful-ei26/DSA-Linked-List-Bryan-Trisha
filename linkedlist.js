@@ -151,7 +151,25 @@ class LinkedList {
     }
   }
   
-  insertAt(){
+  //input: (item, position)  (kat, 3)
+  // Husker, Tauhida, Helo, Hotdog, Boomer, Apollo
+  //output: Husker, Tauhida, Kat, Helo, Hotdog, Boomer, Apollo
+  // traverse through the list, keeping count at each traversal
+  insertAt(item, position){
+    let counter = 1; //3
+    let oldNode = this.head; //Tauhida
+    let currNode = this.head; //Helo
+    if (!this.head) {
+      return null; //why are we returning null, can we insert new _Node(item)
+    }
+    while(counter < position) {
+      oldNode = currNode; // Tauhida
+      currNode = currNode.next; //Helo
+      counter++;
+    } if (counter === position) {
+      let newNode = new _Node(item, oldNode.next);
+      oldNode.next = newNode;
+    }
 
   }
 }
@@ -196,6 +214,8 @@ function main(){
   SLL.remove('squirrel');
   SLL.insertAfter('Hotdog', 'Helo');
   // SLL.insertBefore('Athena', 'Boomer');
+  SLL.insertAt('Kat', 3);
+  SLL.remove('Tauhida');
   console.log(JSON.stringify(SLL, null, 2));
 }
 
