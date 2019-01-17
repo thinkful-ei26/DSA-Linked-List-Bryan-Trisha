@@ -221,7 +221,9 @@ function main(){
   // size(SLL);
   // isEmpty(SLL);
   // console.log('---', JSON.stringify(findPrevious('Helo', SLL), null, 2));
-  console.log('last node:',findLast(SLL));
+  // console.log('last node:',findLast(SLL));
+  console.log('----', reverseList(SLL));
+  console.log('---', recursiveReverse());
 }
 
 // Add Athena before Boomer using your insertBefore() function
@@ -245,13 +247,11 @@ function size (list) {
 }
 
 function isEmpty (list) {
-  if(list.head === null){
-    // console.log('true');
-    return true;
-  } else {
-    return false;
-  }
+  list.head === null
+    ? true  
+    : false; 
 }
+
 
 function findPrevious (item, list) {
   if (!list.head){
@@ -282,3 +282,77 @@ function findLast (list) {
 }
 
 main();
+
+// CAT -> DOG  -> PIG -> RABBIT
+//newNode = CAT
+// newNode.next CAT = PIG 
+// otherwise = rabbit = null
+
+// function WhatDoesThisProgramDo(lst){
+//   let current = lst.head; // CAT
+//   while(current !== null){ 
+//     let newNode = current; //CAT
+//     while (newNode.next !== null) {
+//       if (newNode.next.value === current.value) { // if my next pointer is equal to my current node value
+//         newNode.next = newNode.next.next; //PIG  // set my next pointer to the one after that
+//       } else { // otherwise
+//         newNode = newNode.next; //CAT, next RABBIT // set my node equal to the next one
+//       }
+//     }
+//     current = current.next; // start over again
+//   }
+// }
+
+//change the pointers
+// O(n) => linear
+// A -> B -> C -> D -> E
+
+// currNode.next = null
+// currNode = 
+
+// first item on the list: list.head
+// last item on the list
+// traverse through the list, 
+// check the head, if .next === null, grab the currentNode = next = null 
+/* {
+
+    {item: d, next { item: e, next: null}, 
+    { item: e, next: null} 
+  }
+
+*/
+
+// C points to D which points to E
+// Make E point to D which point to C
+// traverse the list, have currentNode .next 
+// const reverse = list => {
+//   let currNode = list.head;
+//   let prevNode = list.head;
+ 
+// };
+
+function reverseList(list) {
+  let node = list;
+  let previous = null;
+  while (node) {
+    // store the next value
+    let save = node.next;
+    // reverse the pointer
+    node.next = previous;
+    // increment previous to current node
+    previous = node;
+    // increment node to next node or null at end of list
+    node = save;          
+  }
+  return previous;      
+}
+
+const recursiveReverse = (head) => {
+  if (!head || !head.next) {
+    return head;
+  }
+  let temp = recursiveReverse(head.next);
+  head.next.next = head;
+  head.next = undefined;
+  return temp;
+};
