@@ -1,42 +1,36 @@
 'use strict';
 
 class _Node {
-  constructor(item, next){
-    this.item = item;
-    this.next = next;
+  constructor(value, next){
+    this.value=value;
+    this.next=next;
   }
 }
 
+//You have a list, but it's empty
 class LinkedList {
   constructor(){
     this.head = null;
   }
 
-  // 5 10 15 = 
-  // (10) next = null
-  // this.next = new Node(item, null) 
-
   insertLast(item){
-    // Check and see if we have a current list
-    // Check to see if next is pointing to null
-    // Change this.next to this.head
-    // Create a new node given the parameters
-    if (this.head === null) {
-      this.insertFirst(item); 
+    //error check, if it's an empty list, insert the item as the first item. 
+    if(this.head === null){
+      this.insertFirst(item);
     } else {
       let tempNode = this.head;
-      while (tempNode.next !== null) {
-        // go to the next value this.next
-        tempNode = tempNode.next; 
+      //traverse the list from the head (start)
+
+      //as long as the next pointer of the node is not null, continue to follow the next node
+      //1) is 10 pointing to null? no, then 
+      while(tempNode.next !== null){ //we can't always use a for loop because we don't know the length of the list. You can only traverse the list until you find a pointer that 
+        tempNode = tempNode.next; //2) 5 => 10 
       }
-      tempNode.next = new _Node(item, null);       
-      // this.head = this.head
+      tempNode.next = new _Node(item, null); //when you get to the end of your list 
     }
   }
 
   insertFirst(item){
-    //relocate the head to the new Node
-    //once we insert 5 at the beginning, we want new Node's next to be this.head (previously 10)
     this.head = new _Node(item, this.head);
   }
 
@@ -61,22 +55,168 @@ class LinkedList {
     }
     //found it
     return currNode;
+  }  
+
+  remove(item){ 
+    //if the list is empty
+    if (!this.head){
+      return null;
+    }
+    //if the node to be removed is head, make the next node head
+    if(this.head.value === item){
+      this.head = this.head.next;
+      return;
+    }
+    //start at the head
+    let currNode = this.head;
+    //keep track of previous
+    let previousNode = this.head;
+
+    while ((currNode !== null) && (currNode.value !== item)) {
+      //save the previous node 
+      previousNode = currNode;
+      currNode = currNode.next;
+    }
+    if(currNode === null){
+      console.log('Item not found');
+      return;
+    }
+    previousNode.next = currNode.next;
   }
 
-  // remove(){
+  // given a node
+  // value F head = null
+  // (f, null)
+  // (f)
+  
 
-  // }
+  // item('E')
+  //input: C -> D  -> F -> M  //item E, given F
+  //output: C -> D -> E -> F -> M
+  // D will point F
+  // F will point to null
+
+  // currNode = F
+  // E will point to F 
+  // D -- how do we know what D is? -> will point to E 
+  //1. traverse the linked list
+  //2. find given 
+  insertBefore(item, given) {
+    let currNode = this.head; // d
+    let prevNode = this.head; // c
+    //if the list is empty
+    //Check for the item 
+    if (!this.head){
+      return null;
+    }
+  
+    while(currNode.value !== given){
+      prevNode = currNode; // d
+      currNode = currNode.next;
+    } //(f)
+    if(currNode.value === given){
+      // instantiate a new node passing in the item variable with the next value of the node prior to 
+      let newNode = new _Node(item, prevNode.next);
+      // reset the previous node's value of next to point to the newly created node
+      prevNode.next = newNode;
+    }
+  }
+
+  // input: C -> D -> F (F is our Node, has a head === null)
+  // output: C-> D -> E -> F (E is referencing F as its head)
+  // currNode = D
+  // D will point to E 
+  // E will point to where D used to point
+
+  insertAfter(item, given){  // Hotdog, Helo
+    // Iterate through the list and search for a node, store the next value (if any). 
+    // Point that found node to the newly created node. 
+    // Set the next value of the newly created node to reference the found node's next (if there was any)
+    let oldNode = this.head; //Tauhida
+    let currNode = this.head; //Helo
+    //if the list is empty
+    //Check for the item 
+    if (!this.head){
+      return null;
+    }
+    while(currNode.value !== given){
+      oldNode = currNode; //(d) -> f
+      currNode = currNode.next; //(f)-> null
+    }
+    if(currNode.value === given){
+      // instantiate a new node passing in the item variable with the next value of the node prior to 
+      let newNode = new _Node(item, currNode.next);  // Hotdog, {helo}
+      // reset the previous node's value of next to point to the newly created node
+      currNode.next = newNode;
+    }
+  }
+  
+  insertAt(){
+
+  }
 }
+
+// Input: C->D->M->0->P   insert E  (edge case: Z, A)
+// Output: C->D->E->M->0->P  
+
+// function insertInSortedOrder(sll, item){
+
+//   let current = sll.head;
+//   let previous = sll.head;
+
+//   //inserts at the beginning (A)
+//   if(item < sll.head.value){ //if the list is empty
+//     //insertFirst()
+//     this.head = new _Node(item, this.head);
+//     return sll;
+//   }
+
+//   while(current){
+//     if(current.value > item){ 
+//       previous.next = new _Node(item, current);
+//       return sll;
+//     }
+//     previous = current;
+//     current = current.next;
+//   }
+//   //insert at the end (Z)
+//   previous.next = new _Node(item, null);
+//   return sll;
+// }
 
 function main(){
   let SLL = new LinkedList();
   SLL.insertFirst('Apollo');
   SLL.insertFirst('Boomer');
   SLL.insertFirst('Helo');
+  SLL.insertFirst('Tauhida');
   console.log(SLL.insertFirst('Husker'));
   // SLL.insertFirst('Starbuck');
-  console.log(JSON.stringify(SLL, null, 2));
   console.log(SLL.find('Apollo'));
+  SLL.remove('squirrel');
+  SLL.insertAfter('Hotdog', 'Helo');
+  // SLL.insertBefore('Athena', 'Boomer');
+  console.log(JSON.stringify(SLL, null, 2));
 }
+
+// Add Athena before Boomer using your insertBefore() function
+// Add Hotdog after Helo using the insertAfter() method
+
+// function display () {
+  
+// }
+// function size () {
+  
+// }
+// function isEmpty () {
+  
+// }
+// function findPrevious () {
+  
+// }
+// function findLast () {
+  
+// }
+
 
 console.log(main());
