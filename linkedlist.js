@@ -208,35 +208,77 @@ function main(){
   SLL.insertFirst('Boomer');
   SLL.insertFirst('Helo');
   SLL.insertFirst('Tauhida');
-  console.log(SLL.insertFirst('Husker'));
-  // SLL.insertFirst('Starbuck');
-  console.log(SLL.find('Apollo'));
-  SLL.remove('squirrel');
-  SLL.insertAfter('Hotdog', 'Helo');
-  // SLL.insertBefore('Athena', 'Boomer');
-  SLL.insertAt('Kat', 3);
-  SLL.remove('Tauhida');
-  console.log(JSON.stringify(SLL, null, 2));
+  // console.log(SLL.insertFirst('Husker'));
+  // // SLL.insertFirst('Starbuck');
+  // console.log(SLL.find('Apollo'));
+  // SLL.remove('squirrel');
+  // SLL.insertAfter('Hotdog', 'Helo');
+  // // SLL.insertBefore('Athena', 'Boomer');
+  // SLL.insertAt('Kat', 3);
+  // SLL.remove('Tauhida');
+  // console.log(JSON.stringify(SLL, null, 2));
+  // display(SLL);
+  // size(SLL);
+  // isEmpty(SLL);
+  // console.log('---', JSON.stringify(findPrevious('Helo', SLL), null, 2));
+  console.log('last node:',findLast(SLL));
 }
 
 // Add Athena before Boomer using your insertBefore() function
 // Add Hotdog after Helo using the insertAfter() method
 
-// function display () {
-  
-// }
-// function size () {
-  
-// }
-// function isEmpty () {
-  
-// }
-// function findPrevious () {
-  
-// }
-// function findLast () {
-  
-// }
+function display (list) {
+  console.log('---', JSON.stringify(list, null, 2));
+}
 
+function size (list) {
+  // console.log(list.head);
+  // console.log(Object.keys(list.head));
+  let counter = 0;
+  let currNode = list.head;
+  while(currNode !== null){
+    currNode = currNode.next;
+    counter++;
+    // console.log(counter);
+  }
+  // console.log(counter);
+}
 
-console.log(main());
+function isEmpty (list) {
+  if(list.head === null){
+    // console.log('true');
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function findPrevious (item, list) {
+  if (!list.head){
+    return null;
+  }
+  // Iterate through the list
+  // Store previous and current node
+  // Store the prev node .next value
+  let previousNode = list.head; 
+  let currentNode = list.head;
+  while (currentNode.value !== item) {
+    // console.log('-----', currentNode);
+    previousNode = currentNode;
+    currentNode = currentNode.next;
+  }
+  return previousNode;
+
+}
+
+// traverse the list next === null
+// log currNode
+function findLast (list) {
+  let currNode = list.head;
+  console.log(currNode.next);
+  while(currNode.next !== null){
+    currNode = currNode.next;
+  } return currNode;
+}
+
+main();
